@@ -4,6 +4,8 @@ import 'package:bytebank2/models/contact.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
+import '../models/contact.dart';
+
 
 Future<Database> createDatabase() {
   return getDatabasesPath().then( (dbPath) {
@@ -13,7 +15,9 @@ Future<Database> createDatabase() {
         'id INTEGER PRIMARY KEY, '
           'name TEXT, '
           'account_number INTEGER) ');
-    }, version: 1);
+    }, version: 2,
+     onDowngrade: onDatabaseDowngradeDelete,
+    );
   });
 }
 
@@ -34,7 +38,7 @@ Future<List<Contact>> findAll(){
        final Contact contact = Contact(
            map['id'],
            map['name'],
-           map['accountNumber']
+           map['accountNumber'] ?? 0,
        );
        contacts.add(contact);
       }

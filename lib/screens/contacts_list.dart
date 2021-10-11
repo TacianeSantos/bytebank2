@@ -2,7 +2,12 @@ import 'package:bytebank2/database/app_database.dart';
 import 'package:bytebank2/models/contact.dart';
 import 'package:flutter/material.dart';
 
-class ContactsList extends StatelessWidget {
+class ContactsList extends StatefulWidget {
+  @override
+  State<ContactsList> createState() => _ContactsListState();
+}
+
+class _ContactsListState extends State<ContactsList> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -11,7 +16,7 @@ class ContactsList extends StatelessWidget {
       ),
       body: FutureBuilder<List<Contact?>>(
         initialData: [],
-        future: Future.delayed(Duration(seconds: 1)).then((value) => findAll()),
+        future: findAll(),
         builder: (context, snapshot) {
           switch (snapshot.connectionState) {
             case ConnectionState.none:
@@ -45,8 +50,7 @@ class ContactsList extends StatelessWidget {
       //
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Navigator.pushNamed(context, '/contact_form')
-              .then((newContact) => debugPrint(newContact.toString()));
+          Navigator.of(context).pushNamed('/contact_form').then((value) => setState(() {}));
         },
         child: const Icon(Icons.add),
       ),
@@ -56,7 +60,6 @@ class ContactsList extends StatelessWidget {
 
 class _ContactItem extends StatelessWidget {
   final Contact contact;
-
   _ContactItem(this.contact);
 
   @override
