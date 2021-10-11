@@ -58,9 +58,14 @@ class _ContactFormState extends State<ContactForm> {
                   child: Text('Create'),
                   onPressed: () {
                     final String name = _nameController.text;
-                    final int? accountNumber = int.tryParse(_accountNumberController.text);
-                    if(accountNumber != null && name != null) {
+                    final int accountNumber = int.parse(_accountNumberController.text);
+                    print("Aquii ---------------");
+                    print(accountNumber);
+                    if(accountNumber != null) {
                       final Contact newContact = Contact(0,name, accountNumber);
+                      print(newContact.id);
+                      print(newContact.accountNumber);
+                      print(newContact.name);
                       save (newContact).then((id) => Navigator.pop(context));
                     }
                   },
