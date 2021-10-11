@@ -6,8 +6,8 @@ class HomeApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
-    return Scaffold(
-      body: Text('Bem Vindo',),
+    return const Scaffold(
+      body: const Text('Bem Vindo',),
     );
   }
 

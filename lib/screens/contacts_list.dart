@@ -1,4 +1,4 @@
-import 'package:bytebank2/database/app_database.dart';
+import 'package:bytebank2/dao/contact_dao.dart';
 import 'package:bytebank2/models/contact.dart';
 import 'package:flutter/material.dart';
 
@@ -8,15 +8,17 @@ class ContactsList extends StatefulWidget {
 }
 
 class _ContactsListState extends State<ContactsList> {
+  final ContactDao _dao = ContactDao();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Contacts'),
+        title: const Text('Contacts'),
       ),
       body: FutureBuilder<List<Contact?>>(
-        initialData: [],
-        future: findAll(),
+        initialData: const [],
+        future: _dao.findAll(),
         builder: (context, snapshot) {
           switch (snapshot.connectionState) {
             case ConnectionState.none:
@@ -44,7 +46,7 @@ class _ContactsListState extends State<ContactsList> {
                 itemCount: contacts?.length ?? 0,
               );
           }
-          return Text('Unkown error');
+          return const Text('Unkown error');
         },
       ),
       //
@@ -60,7 +62,7 @@ class _ContactsListState extends State<ContactsList> {
 
 class _ContactItem extends StatelessWidget {
   final Contact contact;
-  _ContactItem(this.contact);
+  const _ContactItem(this.contact);
 
   @override
   Widget build(BuildContext context) {
@@ -68,11 +70,11 @@ class _ContactItem extends StatelessWidget {
       child: ListTile(
         title: Text(
           contact.name,
-          style: TextStyle(fontSize: 24.0),
+          style: const TextStyle(fontSize: 24.0),
         ),
         subtitle: Text(
           contact.accountNumber.toString(),
-          style: TextStyle(fontSize: 16.0),
+          style: const TextStyle(fontSize: 16.0),
         ),
       ),
     );

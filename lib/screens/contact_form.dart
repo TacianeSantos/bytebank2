@@ -1,4 +1,4 @@
-import 'package:bytebank2/database/app_database.dart';
+import 'package:bytebank2/dao/contact_dao.dart';
 import 'package:bytebank2/models/contact.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -19,6 +19,8 @@ class _ContactFormState extends State<ContactForm> {
 
   final TextEditingController _accountNumberController = TextEditingController();
 
+  final ContactDao _dao = ContactDao();
+
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
@@ -33,7 +35,7 @@ class _ContactFormState extends State<ContactForm> {
               decoration: InputDecoration(
                 labelText: _fullName,
               ),
-              style: TextStyle(
+              style: const TextStyle(
                 fontSize: 24.0,
               ),
             ),
@@ -44,7 +46,7 @@ class _ContactFormState extends State<ContactForm> {
                 decoration: InputDecoration(
                   labelText: _accountNumber,
                 ),
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 24.0,
                 ),
                 keyboardType: TextInputType.number,
@@ -55,19 +57,13 @@ class _ContactFormState extends State<ContactForm> {
               child: SizedBox(
                 width: double.maxFinite,
                 child: ElevatedButton(
-                  child: Text('Create'),
+                  child: const Text('Create'),
                   onPressed: () {
                     final String name = _nameController.text;
                     final int accountNumber = int.parse(_accountNumberController.text);
-                    print("Aquii ---------------");
-                    print(accountNumber);
-                    if(accountNumber != null) {
-                      final Contact newContact = Contact(0,name, accountNumber);
-                      print(newContact.id);
-                      print(newContact.accountNumber);
-                      print(newContact.name);
-                      save (newContact).then((id) => Navigator.pop(context));
-                    }
+                       final Contact newContact = Contact(0,name, accountNumber);
+                      _dao.save(newContact).then((id) => Navigator.pop(context));
+
                   },
                 ),
               ),

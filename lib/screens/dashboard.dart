@@ -32,19 +32,19 @@ class Dashboard extends StatelessWidget {
                     Navigator.pushNamed(context, '/contacts_list');
                   },
                   child: Container(
-                    padding: EdgeInsets.all(8.0),
+                    padding: const EdgeInsets.all(8.0),
                     height: 100,
                     width: 150,
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
-                        Icon(
+                        const Icon(
                           Icons.people,
                           color: Colors.white,
                           size: 24.0,
                         ),
-                        Text(_strContacts, style: TextStyle(color: Colors.white, fontSize: 16.0)),
+                        Text(_strContacts, style: const TextStyle(color: Colors.white, fontSize: 16.0)),
                       ],
                     ),
                   ),
