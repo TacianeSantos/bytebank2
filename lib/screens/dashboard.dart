@@ -1,12 +1,10 @@
-
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class Dashboard extends StatelessWidget {
-
   final String _tituloAppBar = 'Dashboard';
-  final String _strContacts = 'Contacts';
+
+  const Dashboard({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -18,43 +16,88 @@ class Dashboard extends StatelessWidget {
       body: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget> [
+          children: <Widget>[
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Image.asset('images/bytebank_logo.png'),
             ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Material(
-                color: Theme.of(context).primaryColor,
-                child: InkWell(
-                  onTap: () {
-                    Navigator.pushNamed(context, '/contacts_list');
-                  },
-                  child: Container(
-                    padding: const EdgeInsets.all(8.0),
-                    height: 100,
-                    width: 150,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        const Icon(
-                          Icons.people,
-                          color: Colors.white,
-                          size: 24.0,
-                        ),
-                        Text(_strContacts, style: const TextStyle(color: Colors.white, fontSize: 16.0)),
-                      ],
-                    ),
+            SizedBox(
+              height: 120,
+              child: ListView(
+                scrollDirection: Axis.horizontal,
+                children: <Widget>[
+                  _FeatureItem(
+                    'Transfer',
+                    Icons.monetization_on,
+                    onClick: () {
+                      _showContactList(context);
+                    },
                   ),
-                ),
+                  _FeatureItem(
+                    'Transaction Feed',
+                    Icons.description,
+                    onClick: () {
+                      _showTransactionFeed(context);
+                    },
+                  ),
+                ],
               ),
             ),
-          ]
-      ),
+          ]),
     );
-
   }
 
+  void _showContactList(BuildContext context) {
+    Navigator.of(context).pushNamed('/contacts_list');
+    //.pushNamed(context, '/contacts_list');
+  }
+
+  void _showTransactionFeed(BuildContext context) {
+    Navigator.of(context).pushNamed('/transactions_list');
+  }
+}
+
+class _FeatureItem extends StatelessWidget {
+  final String name;
+  final IconData icon;
+  final Function? onClick;
+
+  const _FeatureItem(this.name, this.icon, {@required this.onClick}) : assert(icon != null), assert(onClick != null);
+
+  //final String _strContacts = 'Transfer';
+
+  @override
+  Widget build(BuildContext context) {
+    // TODO: implement build
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Material(
+        color: Theme.of(context).primaryColor,
+        child: InkWell(
+          onTap: () {
+            onClick!();
+          },
+          child: Container(
+            padding: const EdgeInsets.all(8.0),
+            height: 100,
+            width: 150,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Icon(
+                  icon,
+                  color: Colors.white,
+                  size: 24.0,
+                ),
+                Text(name,
+                    style:
+                        const TextStyle(color: Colors.white, fontSize: 16.0)),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
 }
